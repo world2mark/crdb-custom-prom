@@ -1,0 +1,15 @@
+{
+    "name": "crdb-custom-prom",
+    "version": "0.0.1",
+    "description": "crdb-custom-prom",
+    "engines": {
+        "node": "18.12"
+    },
+    "scripts": {
+        "start": "node --http-parser=legacy ."
+    },
+    "dependencies": {
+        "pg": "^8.8.0",
+        "prom-client": "latest"
+    }
+}
