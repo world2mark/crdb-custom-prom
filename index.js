@@ -26,7 +26,11 @@ new PromClient.Gauge({
         const resultSet = await MyPGPool.query(`SELECT count(*) FROM crdb_internal.tables
             WHERE schema_name NOT IN ('pg_catalog','pg_extension','crdb_internal','information_schema')
             AND database_name != 'system' and state != 'DROP';`);
-        this.set(parseInt(resultSet.rows[0].count));
+        if (resultSet.rows.length === 0) {
+            this.set(0);
+        } else {
+            this.set(parseInt(resultSet.rows[0].count));
+        };
     }
 });
 
@@ -37,7 +41,11 @@ new PromClient.Gauge({
     help: 'Number of contention events in the database',
     async collect() {
         const resultSet = await MyPGPool.query('select num_contention_events from crdb_internal.cluster_contended_indexes;');
-        this.set(parseInt(resultSet.rows[0].num_contention_events));
+        if (resultSet.rows.length === 0) {
+            this.set(0);
+        } else {
+            this.set(parseInt(resultSet.rows[0].num_contention_events));
+        };
     }
 });
 
